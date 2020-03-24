@@ -22,6 +22,7 @@ group :development do
   gem "rubocop-rails", require: false
   gem "bullet"
   gem "brakeman"
+  gem "fasterer"
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
