@@ -24,6 +24,7 @@ group :development do
   gem "brakeman"
   gem "fasterer"
   gem "rails_best_practices"
+  gem "i18n-tasks", "~> 0.9.31"
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
