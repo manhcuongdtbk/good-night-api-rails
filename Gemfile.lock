@@ -59,6 +59,7 @@ GEM
     ast (2.4.0)
     bootsnap (1.4.6)
       msgpack (~> 1.0)
+    brakeman (4.7.2)
     builder (3.2.4)
     bullet (6.1.0)
       activesupport (>= 3.0.0)
@@ -178,6 +179,7 @@ PLATFORMS
 
 DEPENDENCIES
   bootsnap (>= 1.4.2)
+  brakeman
   bullet
   byebug
   jbuilder (~> 2.7)
