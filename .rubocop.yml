@@ -2,6 +2,9 @@ require:
   - rubocop-performance
   - rubocop-rails
 
+Layout/ClassStructure:
+  Enabled: true
+
 Layout/LineLength:
   Max: 120
 
@@ -29,5 +32,6 @@ Style/SymbolArray:
 AllCops:
   TargetRubyVersion: 2.6.5
   Exclude:
-    - "spec/spec_helper.rb"
     - "bin/**/*"
+    - "spec/spec_helper.rb"
+    - "db/schema.rb"
