@@ -18,9 +18,17 @@ You can use any gems you like.
 
 ## Assumptions
 
-- Due to not having to implementing any user registration API, let's assume that we have all the users that we need in the database.
-  I'm using seed data to illustrate this assumption about user records.
+- Due to not having to implement any user registration API, let's assume that we have all the users that we need in the database.
+  I'm using seed data to illustrate this assumption about user records. Each user must have an id and a name.
+- There's no API standard is specified, let's assume that our API consumer need a compact API that returns enough information for the to understand what's going on
 
 ## Database design
 
 <https://dbdiagram.io/d/5e78c3654495b02c3b88a44d>
+
+## API Endpoints
+
+| Endpoints                              | Parameters  | Functionalities                                                                       |
+| -------------------------------------- | ----------- | ------------------------------------------------------------------------------------- |
+| POST /api/v1/users/:user_id/follow     | followed_id | Create relationship between follower with user id and followed with followed user id  |
+| DELETE /api/v1/users/:user_id/unfollow | followed_id | Destroy relationship between follower with user id and followed with followed user id |
