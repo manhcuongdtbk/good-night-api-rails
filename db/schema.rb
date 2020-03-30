@@ -23,9 +23,9 @@ ActiveRecord::Schema.define(version: 2020_03_27_052541) do
 
   create_table "sleeps", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "type", null: false
-    t.float "duration"
     t.datetime "started_at", null: false
     t.datetime "stopped_at"
+    t.float "duration"
     t.bigint "user_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
