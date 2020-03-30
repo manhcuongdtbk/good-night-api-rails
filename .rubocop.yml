@@ -8,8 +8,18 @@ Layout/ClassStructure:
 Layout/LineLength:
   Max: 120
 
+Metrics/BlockLength:
+  Exclude:
+    - "spec/**/*"
+
+Rails/FilePath:
+  Enabled: true
+
 Style/Documentation:
   Enabled: false
+
+Style/EmptyMethod:
+  EnforcedStyle: expanded
 
 Style/FrozenStringLiteralComment:
   Enabled: false
@@ -21,6 +31,9 @@ Style/HashTransformKeys:
   Enabled: true
 
 Style/HashTransformValues:
+  Enabled: true
+
+Style/RedundantSelf:
   Enabled: true
 
 Style/StringLiterals:

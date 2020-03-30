@@ -1,2 +1,7 @@
 ---
 en:
+  controllers:
+    relationships:
+      create:
+        follow_successfully: Follow user with id %{followed_id} successfully
+        unfollow_successfully: Unfollow user with id %{followed_id} successfully
