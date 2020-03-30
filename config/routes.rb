@@ -4,6 +4,7 @@ Rails.application.routes.draw do
       resources :users, only: [] do
         post "follow", to: "relationships#create"
         delete "unfollow", to: "relationships#destroy"
+        resource :start_sleeps, only: :create
       end
     end
   end

@@ -21,6 +21,9 @@ Style/Documentation:
 Style/EmptyMethod:
   EnforcedStyle: expanded
 
+Style/FormatStringToken:
+  EnforcedStyle: template
+
 Style/FrozenStringLiteralComment:
   Enabled: false
 
@@ -40,6 +43,9 @@ Style/StringLiterals:
   EnforcedStyle: double_quotes
 
 Style/SymbolArray:
+  EnforcedStyle: brackets
+
+Style/WordArray:
   EnforcedStyle: brackets
 
 AllCops:

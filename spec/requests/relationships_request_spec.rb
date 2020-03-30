@@ -9,14 +9,18 @@ RSpec.describe "Relationships", type: :request do
     context "when request attributes is valid" do
       let(:user2) { create(:user) }
       let(:params) { { followed_id: user2.id } }
+      it do
+        expect(response.body).to match(
+          /#{I18n.t("controllers.relationships.create.follow_successfully", followed_id: params[:followed_id])}/
+        )
+      end
       specify { expect(response).to have_http_status(:ok) }
-      specify { expect(response.body).to match(/Follow user with id #{user2.id} successfully/) }
     end
 
     context "when request attributes is invalid" do
       let(:params) { { followed_id: 0 } }
-      specify { expect(response).to have_http_status(:not_found) }
       specify { expect(response.body).to match(/Couldn't find User with 'id'=#{params[:followed_id]}/) }
+      specify { expect(response).to have_http_status(:not_found) }
     end
   end
 
@@ -30,14 +34,18 @@ RSpec.describe "Relationships", type: :request do
 
     context "when request attributes is valid" do
       let(:params) { { followed_id: user2.id } }
+      it do
+        expect(response.body).to match(
+          /#{I18n.t("controllers.relationships.destroy.unfollow_successfully", followed_id: user2.id)}/
+        )
+      end
       specify { expect(response).to have_http_status(:ok) }
-      specify { expect(response.body).to match(/Unfollow user with id #{user2.id} successfully/) }
     end
 
     context "when request attributes is invalid" do
       let(:params) { { followed_id: 0 } }
-      specify { expect(response).to have_http_status(:not_found) }
       specify { expect(response.body).to match(/Couldn't find Relationship/) }
+      specify { expect(response).to have_http_status(:not_found) }
     end
   end
 end
