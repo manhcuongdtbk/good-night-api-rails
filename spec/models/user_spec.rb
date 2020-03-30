@@ -6,6 +6,7 @@ RSpec.describe User, type: :model do
 
   it { is_expected.to have_many(:sleeps).dependent(:destroy) }
   it { is_expected.to have_many(:start_sleeps).dependent(:destroy) }
+  it { is_expected.to have_many(:stop_sleeps).dependent(:destroy) }
   it {
     is_expected.to have_many(:active_relationships).class_name("Relationship").with_foreign_key("follower_id")
                                                    .dependent(:destroy)

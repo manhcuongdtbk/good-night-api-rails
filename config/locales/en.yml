@@ -9,3 +9,6 @@ en:
     start_sleeps:
       create:
         clocked_in_successfully: Clocked in go to bed time successfully
+    stop_sleeps:
+      create:
+        clocked_in_successfully: Clocked in go to wake up successfully
