@@ -1,0 +1,2 @@
+class StartSleep < Sleep
+end
