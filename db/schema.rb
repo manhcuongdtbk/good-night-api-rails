@@ -10,7 +10,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_27_052541) do
+ActiveRecord::Schema.define(version: 2020_03_31_051851) do
+
+  create_table "operations", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.datetime "operated_at", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
 
   create_table "relationships", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "follower_id", null: false
@@ -22,13 +28,14 @@ ActiveRecord::Schema.define(version: 2020_03_27_052541) do
   end
 
   create_table "sleeps", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.string "type", null: false
-    t.datetime "started_at", null: false
-    t.datetime "stopped_at"
     t.float "duration"
+    t.bigint "operation_start_id", null: false
+    t.bigint "operation_stop_id"
     t.bigint "user_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["operation_start_id"], name: "fk_rails_4a9dea7421"
+    t.index ["operation_stop_id"], name: "fk_rails_e876665e14"
     t.index ["user_id"], name: "index_sleeps_on_user_id"
   end
 
@@ -40,5 +47,7 @@ ActiveRecord::Schema.define(version: 2020_03_27_052541) do
 
   add_foreign_key "relationships", "users", column: "followed_id", on_delete: :cascade
   add_foreign_key "relationships", "users", column: "follower_id", on_delete: :cascade
+  add_foreign_key "sleeps", "operations", column: "operation_start_id"
+  add_foreign_key "sleeps", "operations", column: "operation_stop_id"
   add_foreign_key "sleeps", "users", on_delete: :cascade
 end
