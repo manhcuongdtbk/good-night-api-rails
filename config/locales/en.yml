@@ -6,9 +6,3 @@ en:
         follow_successfully: Follow user with id %{followed_id} successfully
       destroy:
         unfollow_successfully: Unfollow user with id %{followed_id} successfully
-    start_sleeps:
-      create:
-        clocked_in_successfully: Clocked in go to bed time successfully
-    stop_sleeps:
-      create:
-        clocked_in_successfully: Clocked in go to wake up successfully

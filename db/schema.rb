@@ -10,7 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_27_052541) do
+ActiveRecord::Schema.define(version: 2020_03_31_162635) do
+
+  create_table "operations", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.integer "operation_type", null: false
+    t.datetime "operated_at", null: false
+    t.bigint "sleep_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["sleep_id"], name: "index_operations_on_sleep_id"
+  end
 
   create_table "relationships", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "follower_id", null: false
@@ -22,9 +31,6 @@ ActiveRecord::Schema.define(version: 2020_03_27_052541) do
   end
 
   create_table "sleeps", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.string "type", null: false
-    t.datetime "started_at", null: false
-    t.datetime "stopped_at"
     t.float "duration"
     t.bigint "user_id", null: false
     t.datetime "created_at", precision: 6, null: false
@@ -38,6 +44,7 @@ ActiveRecord::Schema.define(version: 2020_03_27_052541) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  add_foreign_key "operations", "sleeps", on_delete: :cascade
   add_foreign_key "relationships", "users", column: "followed_id", on_delete: :cascade
   add_foreign_key "relationships", "users", column: "follower_id", on_delete: :cascade
   add_foreign_key "sleeps", "users", on_delete: :cascade
