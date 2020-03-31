@@ -8,23 +8,21 @@ end
 User.insert_all!(users)
 
 puts "Importing relationships"
+relationships = []
 ids.each do |follower_id|
-  user = User.find(follower_id)
-  user.following_ids += ids.sample(10)
-end
-
-puts "Importing start sleeps"
-start_sleeps = ids.map do |user_id|
+  followed_ids = ids.sample(10)
   current_time = Time.zone.now
-  { type: "StartSleep", started_at: 10.hours.ago, user_id: user_id, created_at: current_time, updated_at: current_time }
+  followed_ids.each do |followed_id|
+    relationships << { follower_id: follower_id, followed_id: followed_id, created_at: current_time,
+                       updated_at: current_time }
+  end
 end
-StartSleep.insert_all!(start_sleeps)
+Relationship.insert_all!(relationships)
 
-puts "Importing stop sleeps"
-stop_sleeps = ids.map do |user_id|
+puts "Importing operations"
+operations = ids.map do |id|
   current_time = Time.zone.now
-  { type: "StopSleep", started_at: 10.hours.ago, stopped_at: Time.zone.now, user_id: user_id, created_at: current_time,
-    updated_at: current_time }
+  { operated_at: id.hours.ago, created_at: current_time, updated_at: current_time }
 end
-StopSleep.insert_all!(stop_sleeps)
+Operation.insert_all!(operations)
 # rubocop:enable Rails/Output
