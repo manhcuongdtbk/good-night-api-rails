@@ -1,8 +1,13 @@
 ---
 en:
-  controllers:
-    relationships:
-      create:
-        follow_successfully: Follow user with id %{followed_id} successfully
-      destroy:
-        unfollow_successfully: Unfollow user with id %{followed_id} successfully
+  activerecord:
+    errors:
+      messages:
+        redundant: is redundant
+  api:
+    v1:
+      relationships:
+        create:
+          follow_successfully: Follow user with id %{followed_id} successfully
+        destroy:
+          unfollow_successfully: Unfollow user with id %{followed_id} successfully

@@ -11,6 +11,45 @@ We require some restful APIs to achieve the following:
 2. Users can follow and unfollow other users.
 3. See the sleep records over the past week for their friends, ordered by the length of their sleep.
 
+```ruby
+{
+  [
+    {
+      user_id: 1
+      sleeps: [
+        {
+          id: 1,
+          duration: 1 hour,
+          started_at: 10h 23/4,
+          stopped_at: 11h 23/4
+        }
+      ]
+    },
+    {
+      user_id: 2
+    }
+  ]
+}
+
+user = User.find(user_id)
+following_ids = user.following_ids
+sleeps = Sleep.includes(:operation_start, :operation_stop).where(user_id: following_ids).order(:user_id, duration: :desc)
+
+cuong = following_ids.map do |following_id|
+  current_sleeps = sleeps.select {|sleep| sleep.user_id == following_id && sleep.duration}
+  final_sleeps = current_sleeps.map |sleep| do
+    {
+      id: sleep.id,
+      duration: sleep.duration,
+      started_at: sleep.operation_start.operated_at,
+      stopped_at: sleep.operation_stop.operated_at
+    }
+  end
+  {user_id: following_id, sleeps: final_sleeps}
+end
+
+```
+
 Please implement the model, DB migrations, and JSON API.
 You can assume that there are only two fields on the users: "id" and "name”.
 You do not need to implement any user registration API.
@@ -20,11 +59,8 @@ You can use any gems you like.
 
 - Due to not having to implement any user registration API, let's assume that we have all the users that we need in the database.
   I'm using seed data to illustrate this assumption about user records. Each user must have an id and a name.
-- There's no API standard is specified, let's assume that our API consumer need a compact API that returns enough information for the to understand what's going on
-- Because this API must return **ALL** clocked-in times, so every clocked-in time that is sent to the API will be save.
-  Until any further conditions for this API is specified, I'll keep it as simple as possible by assuming that the API consumer has the responsbility to send correct data to the API.
-- Each sleep has its own start and stop time and start time is assumed to be separated from stop time at the request sending moment.
-  API consumer must send stop time along with start time and the true sleep is determined by both of them, not be separated start time and stop time requests.
+- API consumer is assumed to be trusty. Because of not having authentication and authorization, any user can interact with any other user's data.
+- There's no API standard is specified, let's assume that our API consumer need a compact API that returns enough information to understand what's going on
 
 ## Database design
 

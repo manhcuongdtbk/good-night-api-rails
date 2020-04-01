@@ -11,7 +11,7 @@ RSpec.describe "Relationships", type: :request do
       let(:params) { { followed_id: user2.id } }
       it do
         expect(response.body).to match(
-          /#{I18n.t("controllers.relationships.create.follow_successfully", followed_id: params[:followed_id])}/
+          /#{I18n.t("api.v1.relationships.create.follow_successfully", followed_id: params[:followed_id])}/
         )
       end
       specify { expect(response).to have_http_status(:ok) }
@@ -36,7 +36,7 @@ RSpec.describe "Relationships", type: :request do
       let(:params) { { followed_id: user2.id } }
       it do
         expect(response.body).to match(
-          /#{I18n.t("controllers.relationships.destroy.unfollow_successfully", followed_id: user2.id)}/
+          /#{I18n.t("api.v1.relationships.destroy.unfollow_successfully", followed_id: user2.id)}/
         )
       end
       specify { expect(response).to have_http_status(:ok) }

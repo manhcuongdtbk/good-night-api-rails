@@ -16,9 +16,11 @@ ActiveRecord::Schema.define(version: 2020_03_31_162635) do
     t.integer "operation_type", null: false
     t.datetime "operated_at", null: false
     t.bigint "sleep_id", null: false
+    t.bigint "user_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["sleep_id"], name: "index_operations_on_sleep_id"
+    t.index ["user_id"], name: "index_operations_on_user_id"
   end
 
   create_table "relationships", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -45,6 +47,7 @@ ActiveRecord::Schema.define(version: 2020_03_31_162635) do
   end
 
   add_foreign_key "operations", "sleeps", on_delete: :cascade
+  add_foreign_key "operations", "users"
   add_foreign_key "relationships", "users", column: "followed_id", on_delete: :cascade
   add_foreign_key "relationships", "users", column: "follower_id", on_delete: :cascade
   add_foreign_key "sleeps", "users", on_delete: :cascade

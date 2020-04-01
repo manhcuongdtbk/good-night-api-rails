@@ -4,46 +4,143 @@ RSpec.describe "Operations", type: :request do
   let!(:user1) { create(:user) }
 
   describe "POST /api/v1/users/:user_id/operations" do
-    before { post "/api/v1/users/#{user1.id}/operations", params: params }
+    context "when user has no previous operation" do
+      before { post "/api/v1/users/#{user1.id}/operations", params: params }
 
-    context "when request attributes are valid" do
-      context "when operation_type is start" do
+      context "with operation_type is start, operated_at is a valid datetime" do
         let(:params) { { operation_type: "start", operated_at: 10.hours.ago } }
 
         it "returns an object contains all request attributes" do
-          operation = Operation.first
+          operation = Operation.last
           parsed_response = JSON.parse(response.body)
 
-          expect(parsed_response.size).to eq(6)
-          expect(parsed_response["id"]).to eq(operation.id)
-          expect(parsed_response["operation_type"]).to eq(operation.operation_type)
-          expect(parsed_response["operated_at"]).to eq(operation.operated_at.as_json)
-          expect(parsed_response["sleep_id"]).to eq(operation.sleep_id)
-          expect(parsed_response["created_at"]).to eq(operation.created_at.as_json)
-          expect(parsed_response["updated_at"]).to eq(operation.updated_at.as_json)
+          expect(parsed_response.size).to eq(7)
+          expect(parsed_response).to eq(operation.as_json)
         end
 
         specify { expect(response).to have_http_status(:created) }
       end
 
-      # context "when operation_type is stop" do
-      # end
+      context "with operation_type is stop" do
+        let(:params) { { operation_type: "stop", operated_at: 10.hours.ago } }
+
+        specify { expect(response.body).to match(/Validation failed: Operation type is invalid/) }
+        specify { expect(response).to have_http_status(:unprocessable_entity) }
+      end
     end
 
-    # context "when request attributes are invalid" do
-    #   context "with operation_type, operated_at" do
-    #     context "with operation_type is invalid" do
-    #     end
+    context "when user has previous operation" do
+      context "when last operation's operation_type is start" do
+        context "with operation_type is stop" do
+          before do
+            create(:operation, operation_type: "start", operated_at: 10.hours.ago, user: user1)
+            post "/api/v1/users/#{user1.id}/operations", params: params
+          end
 
-    #     context "with operated_at is invalid" do
-    #     end
-    #   end
+          let(:params) { { operation_type: "stop", operated_at: 5.hours.ago } }
 
-    #   context "without operation_type" do
-    #   end
+          it "returns an object contains all request attributes" do
+            operation = Operation.last
+            parsed_response = JSON.parse(response.body)
 
-    #   context "without operated_at" do
-    #   end
-    # end
+            expect(parsed_response.size).to eq(7)
+            expect(parsed_response).to eq(operation.as_json)
+          end
+        end
+
+        context "with operation_type is start" do
+          before do
+            create(:operation, operation_type: "start", operated_at: 10.hours.ago, user: user1)
+            post "/api/v1/users/#{user1.id}/operations", params: params
+          end
+
+          let(:params) { { operation_type: "start", operated_at: 5.hours.ago } }
+
+          specify { expect(response.body).to match(/Validation failed: Operation type is invalid/) }
+          specify { expect(response).to have_http_status(:unprocessable_entity) }
+        end
+      end
+
+      context "when last operation's operation_type is stop" do
+        context "with operation_type is start" do
+          before do
+            create(:operation, operation_type: "start", operated_at: 10.hours.ago, user: user1)
+            create(:operation, operation_type: "stop", operated_at: 6.hours.ago, user: user1)
+            post "/api/v1/users/#{user1.id}/operations", params: params
+          end
+
+          let(:params) { { operation_type: "start", operated_at: 5.hours.ago } }
+
+          it "returns an object contains all request attributes" do
+            operation = Operation.last
+            parsed_response = JSON.parse(response.body)
+
+            expect(parsed_response.size).to eq(7)
+            expect(parsed_response).to eq(operation.as_json)
+          end
+        end
+
+        context "with operation_type is stop" do
+          before do
+            create(:operation, operation_type: "start", operated_at: 10.hours.ago, user: user1)
+            create(:operation, operation_type: "stop", operated_at: 6.hours.ago, user: user1)
+            post "/api/v1/users/#{user1.id}/operations", params: params
+          end
+
+          let(:params) { { operation_type: "stop", operated_at: 5.hours.ago } }
+
+          specify { expect(response.body).to match(/Validation failed: Operation type is invalid/) }
+          specify { expect(response).to have_http_status(:unprocessable_entity) }
+        end
+      end
+
+      context "when operated_at is before last's operation operated_at" do
+        before do
+          create(:operation, operation_type: "start", operated_at: 10.hours.ago, user: user1)
+          post "/api/v1/users/#{user1.id}/operations", params: params
+        end
+
+        let(:params) { { operation_type: "stop", operated_at: 20.hours.ago } }
+
+        specify { expect(response.body).to match(/Validation failed: Operated at is invalid/) }
+        specify { expect(response).to have_http_status(:unprocessable_entity) }
+      end
+    end
+
+    context "with operated_at is not a datetime" do
+      before { post "/api/v1/users/#{user1.id}/operations", params: params }
+
+      let(:params) { { operation_type: "start", operated_at: "tripla" } }
+
+      specify { expect(response.body).to match(/Validation failed: Operated at can't be blank/) }
+      specify { expect(response).to have_http_status(:unprocessable_entity) }
+    end
+
+    context "with operated_at is after current_time" do
+      before { post "/api/v1/users/#{user1.id}/operations", params: params }
+
+      let(:params) { { operation_type: "start", operated_at: 1.hour.from_now } }
+
+      specify { expect(response.body).to match(/Validation failed: Operated at is invalid/) }
+      specify { expect(response).to have_http_status(:unprocessable_entity) }
+    end
+
+    context "without operation_type" do
+      before { post "/api/v1/users/#{user1.id}/operations", params: params }
+
+      let(:params) { { operated_at: 5.hours.ago } }
+
+      specify { expect(response.body).to match(/Validation failed: Operation type is invalid/) }
+      specify { expect(response).to have_http_status(:unprocessable_entity) }
+    end
+
+    context "without operated_at" do
+      before { post "/api/v1/users/#{user1.id}/operations", params: params }
+
+      let(:params) { { operation_type: "start" } }
+
+      specify { expect(response.body).to match(/Validation failed: Operated at can't be blank/) }
+      specify { expect(response).to have_http_status(:unprocessable_entity) }
+    end
   end
 end
