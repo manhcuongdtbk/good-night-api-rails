@@ -9,7 +9,7 @@ module Api
       private
 
       def operation_params
-        params.permit(:operation_type, :operated_at).merge(user_id: params[:user_id])
+        params.permit(:operation_type, :operated_at, :user_id)
       end
     end
   end

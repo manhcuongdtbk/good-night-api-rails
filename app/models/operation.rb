@@ -22,9 +22,7 @@ class Operation < ApplicationRecord
     if last_sleep
       @last_operation = Operation.where(sleep_id: last_sleep.id).last
 
-      if !last_operation
-        operation_type == "start" ? build_sleep(user_id: user_id) : errors.add(:operation_type, :invalid)
-      elsif last_operation.operation_type == "start" && operation_type == "stop"
+      if last_operation.operation_type == "start" && operation_type == "stop"
         self.sleep = last_sleep
       elsif last_operation.operation_type == "stop" && operation_type == "start"
         build_sleep(user_id: user_id)

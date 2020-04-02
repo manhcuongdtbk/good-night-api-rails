@@ -11,45 +11,6 @@ We require some restful APIs to achieve the following:
 2. Users can follow and unfollow other users.
 3. See the sleep records over the past week for their friends, ordered by the length of their sleep.
 
-```ruby
-{
-  [
-    {
-      user_id: 1
-      sleeps: [
-        {
-          id: 1,
-          duration: 1 hour,
-          started_at: 10h 23/4,
-          stopped_at: 11h 23/4
-        }
-      ]
-    },
-    {
-      user_id: 2
-    }
-  ]
-}
-
-user = User.find(user_id)
-following_ids = user.following_ids
-sleeps = Sleep.includes(:operation_start, :operation_stop).where(user_id: following_ids).order(:user_id, duration: :desc)
-
-cuong = following_ids.map do |following_id|
-  current_sleeps = sleeps.select {|sleep| sleep.user_id == following_id && sleep.duration}
-  final_sleeps = current_sleeps.map |sleep| do
-    {
-      id: sleep.id,
-      duration: sleep.duration,
-      started_at: sleep.operation_start.operated_at,
-      stopped_at: sleep.operation_stop.operated_at
-    }
-  end
-  {user_id: following_id, sleeps: final_sleeps}
-end
-
-```
-
 Please implement the model, DB migrations, and JSON API.
 You can assume that there are only two fields on the users: "id" and "name”.
 You do not need to implement any user registration API.
@@ -68,10 +29,11 @@ You can use any gems you like.
 
 ## API Endpoints
 
-| Endpoints                              | Parameters  | Functionalities                                                                       |
-| -------------------------------------- | ----------- | ------------------------------------------------------------------------------------- |
-| POST /api/v1/users/:user_id/follow     | followed_id | Create relationship between follower with user id and followed with followed user id  |
-| DELETE /api/v1/users/:user_id/unfollow | followed_id | Destroy relationship between follower with user id and followed with followed user id |
+| Endpoints                              | Parameters                  | Functionalities                                                                       |
+| -------------------------------------- | --------------------------- | ------------------------------------------------------------------------------------- |
+| POST /api/v1/users/:user_id/follow     | followed_id                 | Create relationship between follower with user id and followed with followed user id  |
+| DELETE /api/v1/users/:user_id/unfollow | followed_id                 | Destroy relationship between follower with user id and followed with followed user id |
+| POST /api/v1/users/:user_id/operations | operation_type, operated_at | Clock in start or stop operation of a sleep                                           |
 
 ## For your curiosity
 
