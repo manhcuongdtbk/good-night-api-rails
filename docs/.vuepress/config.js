@@ -22,5 +22,5 @@ function getExplainationSidebar() {
 }
 
 function getDocumentationSidebar() {
-  return ["", "api-endpoint"];
+  return ["", "database-design", "api-endpoints"];
 }

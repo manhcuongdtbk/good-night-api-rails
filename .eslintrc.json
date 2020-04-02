@@ -3,6 +3,19 @@
   "parser": "babel-eslint",
   "plugins": ["prettier", "babel"],
   "rules": {
-    "prettier/prettier": "error"
+    "prettier/prettier": "error",
+    // eslint-config-airbnb-base 14.1.0, change to sync with rubocop Layout/LineLength Max
+    "max-len": [
+      "error",
+      120, // original: 100
+      2,
+      {
+        "ignoreUrls": true,
+        "ignoreComments": false,
+        "ignoreRegExpLiterals": true,
+        "ignoreStrings": true,
+        "ignoreTemplateLiterals": true
+      }
+    ]
   }
 }
