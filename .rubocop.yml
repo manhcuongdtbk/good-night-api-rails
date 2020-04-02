@@ -52,5 +52,4 @@ AllCops:
   TargetRubyVersion: 2.6.5
   Exclude:
     - "bin/**/*"
-    - "spec/spec_helper.rb"
     - "db/schema.rb"

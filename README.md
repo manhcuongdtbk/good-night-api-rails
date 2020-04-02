@@ -20,11 +20,8 @@ You can use any gems you like.
 
 - Due to not having to implement any user registration API, let's assume that we have all the users that we need in the database.
   I'm using seed data to illustrate this assumption about user records. Each user must have an id and a name.
-- There's no API standard is specified, let's assume that our API consumer need a compact API that returns enough information for the to understand what's going on
-- Because this API must return **ALL** clocked-in times, so every clocked-in time that is sent to the API will be save.
-  Until any further conditions for this API is specified, I'll keep it as simple as possible by assuming that the API consumer has the responsbility to send correct data to the API.
-- Each sleep has its own start and stop time and start time is assumed to be separated from stop time at the request sending moment.
-  API consumer must send stop time along with start time and the true sleep is determined by both of them, not be separated start time and stop time requests.
+- API consumer is assumed to be trusty. Because of not having authentication and authorization, any user can interact with any other user's data.
+- There's no API standard is specified, let's assume that our API consumer need a compact API that returns enough information to understand what's going on
 
 ## Database design
 
@@ -32,10 +29,11 @@ You can use any gems you like.
 
 ## API Endpoints
 
-| Endpoints                              | Parameters  | Functionalities                                                                       |
-| -------------------------------------- | ----------- | ------------------------------------------------------------------------------------- |
-| POST /api/v1/users/:user_id/follow     | followed_id | Create relationship between follower with user id and followed with followed user id  |
-| DELETE /api/v1/users/:user_id/unfollow | followed_id | Destroy relationship between follower with user id and followed with followed user id |
+| Endpoints                              | Parameters                  | Functionalities                                                                       |
+| -------------------------------------- | --------------------------- | ------------------------------------------------------------------------------------- |
+| POST /api/v1/users/:user_id/follow     | followed_id                 | Create relationship between follower with user id and followed with followed user id  |
+| DELETE /api/v1/users/:user_id/unfollow | followed_id                 | Destroy relationship between follower with user id and followed with followed user id |
+| POST /api/v1/users/:user_id/operations | operation_type, operated_at | Clock in start or stop operation of a sleep                                           |
 
 ## For your curiosity
 
