@@ -12,10 +12,9 @@ RSpec.describe "Operations", type: :request do
 
         it "returns an object contains all request attributes" do
           operation = Operation.last
-          parsed_response = JSON.parse(response.body)
 
-          expect(parsed_response.size).to eq(7)
-          expect(parsed_response).to eq(operation.as_json)
+          expect(parsed_body.size).to eq(7)
+          expect(parsed_body).to eq(operation.as_json)
         end
 
         specify { expect(response).to have_http_status(:created) }
@@ -41,10 +40,9 @@ RSpec.describe "Operations", type: :request do
 
           it "returns an object contains all request attributes" do
             operation = Operation.last
-            parsed_response = JSON.parse(response.body)
 
-            expect(parsed_response.size).to eq(7)
-            expect(parsed_response).to eq(operation.as_json)
+            expect(parsed_body.size).to eq(7)
+            expect(parsed_body).to eq(operation.as_json)
           end
         end
 
@@ -73,10 +71,9 @@ RSpec.describe "Operations", type: :request do
 
           it "returns an object contains all request attributes" do
             operation = Operation.last
-            parsed_response = JSON.parse(response.body)
 
-            expect(parsed_response.size).to eq(7)
-            expect(parsed_response).to eq(operation.as_json)
+            expect(parsed_body.size).to eq(7)
+            expect(parsed_body).to eq(operation.as_json)
           end
         end
 
