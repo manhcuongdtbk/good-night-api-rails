@@ -1,0 +1,24 @@
+{
+  "name": "good-night-api-rails",
+  "version": "1.0.0",
+  "description": "A good night application that lets users track when they go to bed and when they wake up, following other users and see their sleep records over the past week",
+  "main": "index.js",
+  "repository": "https://github.com/manhcuongdtbk/good-night-api-rails",
+  "author": "manhcuongdtbk <manhcuongdtbk@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "docs:dev": "vuepress dev docs",
+    "docs:build": "vuepress build docs"
+  },
+  "devDependencies": {
+    "babel-eslint": "^10.1.0",
+    "eslint": "^6.8.0",
+    "eslint-config-airbnb-base": "^14.1.0",
+    "eslint-config-prettier": "^6.10.1",
+    "eslint-plugin-babel": "^5.3.0",
+    "eslint-plugin-import": "^2.20.2",
+    "eslint-plugin-prettier": "^3.1.2",
+    "prettier": "^2.0.2",
+    "vuepress": "^1.4.0"
+  }
+}
