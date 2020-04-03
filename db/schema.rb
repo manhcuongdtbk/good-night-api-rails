@@ -10,18 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_31_162635) do
-
-  create_table "operations", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.integer "operation_type", null: false
-    t.datetime "operated_at", null: false
-    t.bigint "sleep_id", null: false
-    t.bigint "user_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["sleep_id"], name: "index_operations_on_sleep_id"
-    t.index ["user_id"], name: "index_operations_on_user_id"
-  end
+ActiveRecord::Schema.define(version: 2020_03_31_162001) do
 
   create_table "relationships", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "follower_id", null: false
@@ -33,6 +22,10 @@ ActiveRecord::Schema.define(version: 2020_03_31_162635) do
   end
 
   create_table "sleeps", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.datetime "clock_in", precision: 6, null: false
+    t.datetime "clock_in_created_at", precision: 6, null: false
+    t.datetime "clock_out", precision: 6
+    t.datetime "clock_out_create_at", precision: 6
     t.float "duration"
     t.bigint "user_id", null: false
     t.datetime "created_at", precision: 6, null: false
@@ -46,8 +39,6 @@ ActiveRecord::Schema.define(version: 2020_03_31_162635) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  add_foreign_key "operations", "sleeps", on_delete: :cascade
-  add_foreign_key "operations", "users"
   add_foreign_key "relationships", "users", column: "followed_id", on_delete: :cascade
   add_foreign_key "relationships", "users", column: "follower_id", on_delete: :cascade
   add_foreign_key "sleeps", "users", on_delete: :cascade
