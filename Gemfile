@@ -10,6 +10,7 @@ gem "mysql2", ">= 0.4.4"
 gem "puma", "~> 4.1"
 gem "rails", "~> 6.0.2", ">= 6.0.2.2"
 gem "redis"
+gem "sidekiq"
 
 group :development, :test do
   gem "byebug", platforms: [:mri, :mingw, :x64_mingw]

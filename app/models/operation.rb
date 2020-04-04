@@ -8,7 +8,7 @@ class Operation < ApplicationRecord
   validates :operated_at, presence: true
   validate :operated_at_in_valid_range, if: -> { operated_at.present? }
   after_create :update_sleep_duration, if: -> { operation_type == "stop" }
-  after_save :create_json_cache
+  after_save :create_index_json_cache
 
   class << self
     def index_cache_key(operations)
@@ -52,11 +52,7 @@ class Operation < ApplicationRecord
     self.sleep.update!(duration: operated_at - last_operation.operated_at)
   end
 
-  def create_json_cache
-    operations = Operation.where(user_id: user_id).order(created_at: :desc)
-
-    Rails.cache.fetch(Operation.index_cache_key(operations)) do
-      operations.as_json(only: [:id, :operation_type, :operated_at, :created_at])
-    end
+  def create_index_json_cache
+    CreateOperationsIndexJsonCacheJob.perform_later(user_id)
   end
 end
