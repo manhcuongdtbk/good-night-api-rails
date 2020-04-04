@@ -2,12 +2,19 @@ class Operation < ApplicationRecord
   belongs_to :sleep
   belongs_to :user
 
+  enum operation_type: { stop: 0, start: 1 }
+
   before_validation :start_stop_cycle, on: :create, if: -> { user_id.present? }
   validates :operated_at, presence: true
   validate :operated_at_in_valid_range, if: -> { operated_at.present? }
   after_create :update_sleep_duration, if: -> { operation_type == "stop" }
+  after_save :create_json_cache
 
-  enum operation_type: { stop: 0, start: 1 }
+  class << self
+    def index_cache_key(operations)
+      operations.maximum(:updated_at)
+    end
+  end
 
   private
 
@@ -43,5 +50,13 @@ class Operation < ApplicationRecord
 
   def update_sleep_duration
     self.sleep.update!(duration: operated_at - last_operation.operated_at)
+  end
+
+  def create_json_cache
+    operations = Operation.where(user_id: user_id).order(created_at: :desc)
+
+    Rails.cache.fetch(Operation.index_cache_key(operations)) do
+      operations.as_json(only: [:id, :operation_type, :operated_at, :created_at])
+    end
   end
 end
