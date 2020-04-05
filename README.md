@@ -22,3 +22,53 @@ You can use any gems you like.
   I'm using seed data to illustrate this assumption about user records. Each user must have an id and a name.
 - API consumer is assumed to be trusty. Because of not having authentication and authorization, any user can interact with any other user's data.
 - There's no API standard is specified, let's assume that our API consumer need a compact API that returns enough information to understand what's going on
+
+## Development
+
+### Docker
+
+To be continued...
+
+### Mac OS
+
+1. Create your own database config file
+
+   `cp config/database.yml.example config/database.yml`
+
+2. Install redis
+
+   `brew install redis`
+
+3. Install gems
+
+   `bundle install`
+
+4. Seed data
+
+   `rails db:drop db:create db:migrate db:seed`
+
+5. Start Rails server on localhost:3000
+
+   `rails s`
+
+6. Start sidekiq
+
+   `bundle exec sidekiq`
+
+7. (Optional) If you want to read the explainations and documentations
+
+   Install javascript dependencies
+
+   ```console
+   brew install node
+   brew install yarn
+   yarn install
+   ```
+
+   Start docs server on localhost:8080
+
+   `yarn docs:dev`
+
+## Production
+
+To be continued...
