@@ -1,5 +1,5 @@
 module.exports = {
-  title: "Good Night API Documentation",
+  title: "Good Night API",
   description: "Decision explainations and project documentation",
   themeConfig: {
     lastUpdated: "Last Updated",
@@ -7,18 +7,18 @@ module.exports = {
       { text: "Home", link: "/" },
       { text: "Explaination", link: "/explaination/" },
       { text: "Documentation", link: "/documentation/" },
-      { text: "GitHub", link: "https://github.com/manhcuongdtbk/good-night-api-rails" }
+      { text: "GitHub", link: "https://github.com/manhcuongdtbk/good-night-api-rails" },
     ],
     sidebar: {
       "/explaination/": getExplainationSidebar(),
-      "/documentation/": getDocumentationSidebar()
+      "/documentation/": getDocumentationSidebar(),
     },
-    smoothScroll: true
-  }
+    smoothScroll: true,
+  },
 };
 
 function getExplainationSidebar() {
-  return ["", "choosing-vuepress"];
+  return ["", "choosing-vuepress", "choosing-serializer"];
 }
 
 function getDocumentationSidebar() {

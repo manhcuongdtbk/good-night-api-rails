@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Operations", type: :request do
+RSpec.describe "Api::V1::Operations", type: :request do
   let!(:user1) { create(:user) }
 
   describe "POST /api/v1/users/:user_id/operations" do

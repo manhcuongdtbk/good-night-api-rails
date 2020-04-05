@@ -1,10 +1,10 @@
 require "rails_helper"
 
-RSpec.describe "Relationships", type: :request do
+RSpec.describe "Api::V1::Relationships", type: :request do
   let!(:user1) { create(:user) }
 
   describe "POST /api/v1/users/:user_id/follow" do
-    context "when request attributes is valid" do
+    context "when request attributes are valid" do
       context "with an existed followed_id that this user have not followed before" do
         let(:user2) { create(:user) }
 
@@ -19,7 +19,7 @@ RSpec.describe "Relationships", type: :request do
       end
     end
 
-    context "when request attributes is invalid" do
+    context "when request attributes are invalid" do
       context "with a not existed followed_id" do
         let(:followed_id) { 0 }
 

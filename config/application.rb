@@ -37,5 +37,8 @@ module TriplaAssignment
     # Default time zone
     config.time_zone = "Asia/Tokyo"
     config.active_record.default_timezone = :local
+
+    # Active Job queuing backend
+    config.active_job.queue_adapter = :sidekiq
   end
 end
