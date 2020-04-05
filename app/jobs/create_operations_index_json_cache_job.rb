@@ -7,7 +7,7 @@ class CreateOperationsIndexJsonCacheJob < ApplicationJob
                           .order(created_at: :desc)
 
     Rails.cache.fetch(Operation.index_cache_key(operations)) do
-      operations
+      operations.to_json
     end
   end
 end
