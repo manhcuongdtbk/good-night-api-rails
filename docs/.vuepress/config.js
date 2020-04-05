@@ -18,7 +18,7 @@ module.exports = {
 };
 
 function getExplainationSidebar() {
-  return ["", "choosing-vuepress", "choosing-serializer"];
+  return ["", "choosing-vuepress", "edit-migrations-directly", "choosing-serializer"];
 }
 
 function getDocumentationSidebar() {

@@ -22,8 +22,3 @@ You can use any gems you like.
   I'm using seed data to illustrate this assumption about user records. Each user must have an id and a name.
 - API consumer is assumed to be trusty. Because of not having authentication and authorization, any user can interact with any other user's data.
 - There's no API standard is specified, let's assume that our API consumer need a compact API that returns enough information to understand what's going on
-
-## For your curiosity
-
-- I don't add any extra migrations and modify existed migrations because I don't want to have a long list of migrations running each time I do a fully manual test.
-  On the other hand, I'm the only developer of this project for now. Because of that, there should not any conflicts between my migrations and other developer.
