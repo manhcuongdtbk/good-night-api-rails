@@ -20,7 +20,7 @@ class Operation < ApplicationRecord
 
   attr_reader :last_operation
 
-  # rubocop:disable Metrics/MethodLength, Metrics/AbcSize, Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity
+  # rubocop:disable Metrics/AbcSize, Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity
   def start_stop_cycle
     return errors.add(:sleep_id, :redundant) if sleep.present? || sleep_id.present?
 
@@ -40,7 +40,7 @@ class Operation < ApplicationRecord
       operation_type == "start" ? build_sleep(user_id: user_id) : errors.add(:operation_type, :invalid)
     end
   end
-  # rubocop:enable Metrics/MethodLength, Metrics/AbcSize, Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity
+  # rubocop:enable Metrics/AbcSize, Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity
 
   def operated_at_in_valid_range
     return if operated_at <= Time.zone.now && (!last_operation || operated_at > last_operation.operated_at)

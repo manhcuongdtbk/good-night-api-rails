@@ -1,4 +1,4 @@
-# TRIPLA ASSIGNMENT
+# GOOD NIGHT API RAILS
 
 **Note: This documentation is still in-progress**
 
