@@ -71,7 +71,7 @@ GEM
     concurrent-ruby (1.1.6)
     connection_pool (2.2.2)
     crass (1.0.6)
-    database_cleaner (1.8.3)
+    database_cleaner (1.8.4)
     database_cleaner-active_record (1.8.0)
       activerecord
       database_cleaner (~> 1.8.0)
@@ -86,7 +86,7 @@ GEM
       railties (>= 4.2.0)
     faker (2.11.0)
       i18n (>= 1.6, < 2)
-    fasterer (0.8.2)
+    fasterer (0.8.3)
       colorize (~> 0.7)
       ruby_parser (>= 3.14.1)
     ffi (1.12.2)
@@ -107,8 +107,6 @@ GEM
       rainbow (>= 2.2.2, < 4.0)
       terminal-table (>= 1.5.1)
     jaro_winkler (1.5.4)
-    jbuilder (2.10.0)
-      activesupport (>= 5.0.0)
     json (2.3.0)
     listen (3.1.5)
       rb-fsevent (~> 0.9, >= 0.9.4)
@@ -271,7 +269,6 @@ DEPENDENCIES
   fasterer
   hiredis
   i18n-tasks (~> 0.9.31)
-  jbuilder (~> 2.7)
   listen (>= 3.0.5, < 3.2)
   mysql2 (>= 0.4.4)
   puma (~> 4.1)

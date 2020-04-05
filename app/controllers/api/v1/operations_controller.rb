@@ -2,8 +2,14 @@ module Api
   module V1
     class OperationsController < ApplicationController
       def index
-        @user = User.select(:id, :name).find(params[:user_id])
-        @operations = @user.operations.select(:id, :operation_type, :operated_at, :created_at).order(created_at: :desc)
+        user = User.select(:id, :name).find(params[:user_id])
+        operations = user.operations.select(:id, :operation_type, :operated_at, :created_at).order(created_at: :desc)
+
+        cached_operations = Rails.cache.fetch(Operation.index_cache_key(operations)) do
+          operations.to_json
+        end
+
+        json_response_object(cached_operations)
       end
 
       def create

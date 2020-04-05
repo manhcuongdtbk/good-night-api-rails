@@ -11,6 +11,7 @@ Layout/LineLength:
 Metrics/BlockLength:
   Exclude:
     - "spec/**/*"
+    - "config/environments/development.rb"
 
 Rails/FilePath:
   Enabled: true

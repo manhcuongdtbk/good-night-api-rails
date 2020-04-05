@@ -79,7 +79,7 @@ Testing on Postman shows us the output JSON like:
 }
 ```
 
-It took about **4,25s** on my machine to GET the JSON serialized response for 1 user record and 10.000 operation records
+It took about **4,25s** on my machine to GET the JSON serialized response for 1 user record and 20.000 operation records
 with selected fields. It's horribly slow for one request-response and if this happens on a production server, for sure
 in the normal cases, you will loose your customer (or not even have 1 after they use the trial version ;()
 
@@ -153,6 +153,9 @@ of this gem on their blog and the README file which we can see on the first time
 
 Those above reason convinced me enough to choose it to be the thing that I can use to solve all the headache problems
 while keeping what I like in AMS without what I don't like in Jbuilder. Then how did I implemented it in the assignment?
+
+[**UPDATED**] Fast JSON API can not solve caching collections, back to Jbuilder until I find a way to use caching with
+Fast JSON API. Detailed will be update to the appropriate article!
 
 Using the controller above in the [Jbuilder section](#jbuilder) with a little modification:
 
