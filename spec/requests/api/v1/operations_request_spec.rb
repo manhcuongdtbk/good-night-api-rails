@@ -3,6 +3,22 @@ require "rails_helper"
 RSpec.describe "Api::V1::Operations", type: :request do
   let!(:user1) { create(:user) }
 
+  describe "GET /api/v1/users/:user_id/operations" do
+    before do
+      create(:operation, operation_type: "start", operated_at: 10.hours.ago, user: user1)
+      create(:operation, operation_type: "stop", operated_at: 5.hours.ago, user: user1)
+      get "/api/v1/users/#{user1.id}/operations"
+    end
+
+    it "returns all clocked-in times of this user order by created time with status 200" do
+      expect(parsed_body.size).to eq(2)
+      expect(parsed_body).to eq(Operation.all.order(created_at: :desc).as_json(only: [:id, :operation_type,
+                                                                                      :operated_at, :created_at]))
+    end
+
+    specify { expect(response).to have_http_status(:ok) }
+  end
+
   describe "POST /api/v1/users/:user_id/operations" do
     context "when user has no previous operation" do
       before { post "/api/v1/users/#{user1.id}/operations", params: params }
