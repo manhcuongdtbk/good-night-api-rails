@@ -5,6 +5,7 @@ Rails.application.routes.draw do
         post "follow", to: "relationships#create"
         delete "unfollow", to: "relationships#destroy"
         resources :operations, only: [:index, :create]
+        resources :following_sleeps, only: :index
       end
     end
   end
